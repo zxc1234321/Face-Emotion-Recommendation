@@ -5,4 +5,5 @@ Framework
 AI - Tensorflow.js
 Backend - Spring Boot
 Frontend - React
+DB - MariaDB
 ```
