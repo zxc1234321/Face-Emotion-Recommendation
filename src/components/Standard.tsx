@@ -10,7 +10,7 @@ const Stand_span = styled.span`
 export default function Standard() {
   return (
     <Stand_span>
-      <a href="#">Hello World</a>
+      <h1>Hello World!</h1>
     </Stand_span>
   );
 }
