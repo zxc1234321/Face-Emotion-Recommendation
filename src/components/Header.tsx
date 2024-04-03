@@ -12,7 +12,7 @@ import filmWhite from '../assets/film_white.svg';
 import musicWhite from '../assets/music_white.svg';
 
 const Category = styled.div`
-  padding: 30px;
+  padding: 10px;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -98,13 +98,9 @@ const CategoryItemWrapper = ({ children, text, isDarkMode }) => {
         )}
       </CategoryLink>
       {text === 'Music' ? (
-        <MusicText style={{ opacity: showText ? 1 : 0 }}>
-          {text}
-        </MusicText>
+        <MusicText style={{ opacity: showText ? 1 : 0 }}>{text}</MusicText>
       ) : (
-        <Text style={{ opacity: showText ? 1 : 0 }}>
-          {text}
-        </Text>
+        <Text style={{ opacity: showText ? 1 : 0 }}>{text}</Text>
       )}
     </CategoryItem>
   );

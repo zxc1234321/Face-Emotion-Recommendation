@@ -6,11 +6,14 @@ const Stand_span = styled.span`
   border: 1px solid black;
 `;
 
-// 정보 나타내는 컴포넌트
-export default function Standard() {
+interface StandardProps {
+  content: string;
+}
+
+export default function Standard({ content }: StandardProps) {
   return (
     <Stand_span>
-      <h1>Hello World!</h1>
+      <h1>{content}</h1>
     </Stand_span>
   );
 }
