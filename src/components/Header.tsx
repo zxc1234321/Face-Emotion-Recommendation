@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom'; 
 // 기본 이미지 파일
 import bookSparkles from '../assets/book-sparkles-svgrepo-com.svg';
 import clapperboard from '../assets/clapperboard-svgrepo-com.svg';
@@ -110,7 +111,7 @@ export default function Header({ isDarkMode }) {
   return (
     <Category>
       {/* 다크 모드 상태 전달 */}
-      <CategoryItemWrapper text="Books" isDarkMode={isDarkMode} />
+      <CategoryItemWrapper  text="Books" isDarkMode={isDarkMode} />
       <CategoryItemWrapper text="Drama" isDarkMode={isDarkMode} />
       <CategoryItemWrapper text="Movie" isDarkMode={isDarkMode} />
       <CategoryItemWrapper text="Music" isDarkMode={isDarkMode} />

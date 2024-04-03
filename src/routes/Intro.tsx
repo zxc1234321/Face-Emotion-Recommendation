@@ -1,12 +1,9 @@
-import React from 'react';
+import Header from '../components/Header';
 
-const Intro = () => {
+export default function Intro() {
   return (
     <div>
-      <h1>Intro Page</h1>
-      {}
+      <h1>Intro</h1>
     </div>
-  );
-};
-
-export default Intro;
+  )
+}
