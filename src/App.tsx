@@ -8,7 +8,7 @@ const App = () => {
     <Router>
       <Routes>
         <Route path="/Movie" element={<Movie />} />
-        <Route path="/" element={<Intro />} /> {/* Intro 컴포넌트를 '/' 경로에 매핑합니다. */}
+        <Route path="/" element={<Intro />} />
       </Routes>
     </Router>
   );

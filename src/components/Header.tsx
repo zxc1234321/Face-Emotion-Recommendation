@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom'; 
-// 기본 이미지 파일
+
 import bookSparkles from '../assets/book-sparkles-svgrepo-com.svg';
 import clapperboard from '../assets/clapperboard-svgrepo-com.svg';
 import filmAlt from '../assets/film-alt-svgrepo-com.svg';
 import music from '../assets/music-svgrepo-com.svg';
-// 추가: 다크 모드용 이미지 파일
+
 import bookWhite from '../assets/book_white.svg';
 import clapperWhite from '../assets/clapperboard_white.svg';
 import filmWhite from '../assets/film_white.svg';
@@ -52,19 +52,23 @@ const Text = styled.div`
 `;
 
 const MusicText = styled(Text)`
-  left: calc(50% + 5px); /* 텍스트를 오른쪽으로 살짝만 이동 */
+  left: calc(50% + 5px);
 `;
 
-const CategoryItemWrapper = ({ children, text, isDarkMode }) => {
-  const [showText, setShowText] = useState(false);
+interface CategoryItemWrapperProps {
+  text: string;
+  isDarkMode: boolean;
+}
+
+const CategoryItemWrapper: React.FC<CategoryItemWrapperProps> = ({ children, text, isDarkMode }) => {
+  const [showText, setShowText] = useState<boolean>(false);
 
   return (
     <CategoryItem
       onMouseEnter={() => setShowText(true)}
       onMouseLeave={() => setShowText(false)}
     >
-      <CategoryLink>
-        {/* 다크 모드일 때 해당하는 다크 모드 이미지 출력 */}
+      <CategoryLink href="#">
         {isDarkMode ? (
           <>
             {text === 'Books' && (
@@ -81,7 +85,6 @@ const CategoryItemWrapper = ({ children, text, isDarkMode }) => {
             )}
           </>
         ) : (
-          /* 라이트 모드일 때 기본 이미지 출력 */
           <>
             {text === 'Books' && (
               <img src={bookSparkles} alt="Books" width="60" height="60" />
@@ -107,14 +110,19 @@ const CategoryItemWrapper = ({ children, text, isDarkMode }) => {
   );
 };
 
-export default function Header({ isDarkMode }) {
+interface HeaderProps {
+  isDarkMode: boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ isDarkMode }) => {
   return (
     <Category>
-      {/* 다크 모드 상태 전달 */}
-      <CategoryItemWrapper  text="Books" isDarkMode={isDarkMode} />
+      <CategoryItemWrapper text="Books" isDarkMode={isDarkMode} />
       <CategoryItemWrapper text="Drama" isDarkMode={isDarkMode} />
       <CategoryItemWrapper text="Movie" isDarkMode={isDarkMode} />
       <CategoryItemWrapper text="Music" isDarkMode={isDarkMode} />
     </Category>
   );
-}
+};
+
+export default Header;
