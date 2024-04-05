@@ -3,9 +3,9 @@ import styled, { ThemeProvider } from 'styled-components';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from '../components/Header';
 import ToggleSwitch from '../components/ToggleSwitch';
-import Information from '../components/Movie/Information';
-import Author from '../components/Movie/Author';
-import Reaction from '../components/Movie/Reaction';
+import Information from '../components/Moviedrama/Information';
+import Author from '../components/Moviedrama/Author';
+import Reaction from '../components/Moviedrama/Reaction';
 
 const lightTheme = {
   body: '#ffffff',
