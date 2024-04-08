@@ -16,7 +16,7 @@ const lightTheme = {
 const darkTheme = {
   body: '#1e1e1e',
   text: '#ffffff',
-  border: '#ffffff', // 다크모드일 때 테두리 색상을 흰색으로 지정
+  border: '#ffffff',
 };
 
 const AppContainer = styled.div`
@@ -24,7 +24,7 @@ const AppContainer = styled.div`
   color: ${({ theme }) => theme.text};
   transition: background-color 0.3s ease, color 0.3s ease;
   min-height: 100vh;
-  padding: 10px 150px; /* 여백을 10px로 수정 */
+  padding: 10px 150px;
 `;
 
 const HeaderContainer = styled.div`

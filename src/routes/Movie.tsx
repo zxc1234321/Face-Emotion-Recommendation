@@ -37,7 +37,7 @@ const HeaderContainer = styled.div`
 
 const Movie = () => {
   const location = useLocation();
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);

@@ -23,7 +23,7 @@ const CategoryItem = styled.div`
   position: relative;
 `;
 
-const CategoryLink = styled.a`
+const CategoryLink = styled(Link)`
   display: block;
   text-decoration: none;
   color: inherit;
@@ -38,6 +38,11 @@ const CategoryLink = styled.a`
   height: 60px;
   width: 60px;
   cursor: pointer;
+
+  // 다크 모드와 라이트 모드에 따른 배경 이미지 설정
+  background-image: ${({ theme, isDarkMode }) => 
+    isDarkMode ? `url(${theme.bookWhite})` : `url(${theme.bookSparkles})`
+  };
 `;
 
 const Text = styled.div`
@@ -68,7 +73,7 @@ const CategoryItemWrapper: React.FC<CategoryItemWrapperProps> = ({ children, tex
       onMouseEnter={() => setShowText(true)}
       onMouseLeave={() => setShowText(false)}
     >
-      <CategoryLink href="#">
+      <CategoryLink to={`/${text.toLowerCase()}`}>
         {isDarkMode ? (
           <>
             {text === 'Books' && (
