@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import DarkModeToggle from '../components/DarkModeToggle';
 import Logo from '../assets/svg/logo.svg';
+import LogoWhite from '../assets/svg/logo_white.svg';
 import Webcam from '../components/Webcam';
 
 // 전체를 감싸는 div
@@ -20,18 +22,25 @@ const LogoImg = styled.img`
     margin-bottom: 60px; // 여백
 `;
 
+const DarkModeContainer = styled.div`
+    position: absolute;
+    top: 10px;
+    right: 10px;
+`;
+
 function Mainpage() {
+    const isDarkMode = useSelector((state: any) => state.darkMode);
+
     return (
-        <Router> {/* BrowserRouter로 감싸기 */}
-            <Container>
-                <div>
-                    <Link to="/">
-                        <LogoImg src={Logo} alt="logo" />
-                    </Link>
-                </div>
-                <Webcam />
-            </Container>
-        </Router>
+        <Container>
+            <Link to="/">
+            <LogoImg src={isDarkMode ? LogoWhite : Logo} alt="logo" /> {/* 로고 이미지를 다크모드에 따라 변경 */}
+            </Link>
+            <Webcam />
+            <DarkModeContainer>
+                <DarkModeToggle />
+            </DarkModeContainer>
+        </Container>
     );
 }
 

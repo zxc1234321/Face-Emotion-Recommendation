@@ -1,16 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
-import LeftBox from '../components/LeftBox';
-import RightBox from '../components/RightBox';
+import styled from 'styled-components';
+import Header from '../components/Header';
+
+const Container = styled.div`
+    padding: 20px 220px; /* 좌우 여백 설정 */
+`;
 
 const Books: React.FC = () => {
     return (
-        <Router>
-        <div>
-            <LeftBox />
-            <RightBox />
-        </div>
-        </Router>
+        <Container>
+            <Header />
+        </Container>
     );
 };
 

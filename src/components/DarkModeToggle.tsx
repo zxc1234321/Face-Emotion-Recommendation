@@ -31,7 +31,7 @@ const ToggleSwitchButton = styled.span`
     transition: background-color 0.4s ease;
     
     &:after {
-        content: "🌝";
+        content: "🌚";
         display: flex;
         justify-content: center;
         align-items: center;
@@ -76,8 +76,22 @@ const DarkModeToggle: React.FC = () => {
         document.body.className = darkMode ? 'dark-mode' : 'light-mode';
     }, [darkMode]);
 
+    useEffect(() => {
+        // 페이지 로드 시 저장된 상태 불러오기
+        const savedDarkMode = localStorage.getItem('darkMode');
+        if (savedDarkMode !== null) {
+            dispatch(toggleDarkMode()); // 저장된 상태가 있다면 다크 모드로 설정
+        }
+    }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
+
+    const handleToggle = () => {
+        dispatch(toggleDarkMode());
+        // 설정 변경 시 로컬 스토리지에 저장
+        localStorage.setItem('darkMode', !darkMode ? 'true' : 'false');
+    };
+
     return (
-        <ToggleSwitch isChecked={darkMode} onChange={() => dispatch(toggleDarkMode())} />
+        <ToggleSwitch isChecked={darkMode} onChange={handleToggle} />
     );
 };
 
