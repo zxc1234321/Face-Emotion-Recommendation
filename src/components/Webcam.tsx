@@ -7,7 +7,7 @@ const VideoContainer = styled.div`
     width: 750px;
     height: 500px;
     margin: 0 auto;
-    border: 3px solid ${props => props.isDarkMode ? '#fff' : '#000'}; /* Dark Mode일 때 border 색 변경 */
+    border: 2px solid ${props => props.isDarkMode ? '#fff' : '#000'}; /* Dark Mode일 때 border 색 변경 */
 `;
 
 const Video = styled.video`
@@ -102,7 +102,7 @@ const Webcam = () => {
                 </Button>
                 {!isWebcamAvailable && (
                     <p style={{ color: '#ff0000', textAlign: 'center' }}>
-                        카메라를 지원하지 않는 환경입니다
+                        **카메라를 지원하지 않는 환경입니다**
                     </p>
                 )}
             </ButtonContainer>
