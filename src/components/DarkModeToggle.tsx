@@ -1,13 +1,15 @@
+// DarkModeToggle.tsx 파일
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { toggleDarkMode } from '../modules/Actions';
+import RootState from '../modules/RootState'; // 수정된 부분
 
 const ToggleSwitchWrapper = styled.label`
   display: inline-block;
   position: relative;
-  width: 4.2em; /* 토글 스위치의 너비 조정 */
-  height: 2em; /* 토글 스위치의 높이 조정 */
+  width: 4.2em;
+  height: 2em;
 `;
 
 const ToggleSwitchInput = styled.input`
@@ -22,7 +24,7 @@ const ToggleSwitchButton = styled.span`
   right: 0;
   bottom: 0;
   background-color: lightgray;
-  border-radius: 2em; /* 토글 스위치 버튼의 둥근 모양을 위한 반지름 설정 */
+  border-radius: 2em;
   transition: background-color 0.4s ease;
 
   &:after {
@@ -67,7 +69,7 @@ const ToggleSwitch: React.FC<{ isChecked: boolean; onChange: () => void }> = ({
 };
 
 const DarkModeToggle: React.FC = () => {
-  const darkMode = useSelector((state: any) => state.darkMode);
+  const darkMode = useSelector((state: RootState) => state.darkMode); // 수정된 부분
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -75,16 +77,14 @@ const DarkModeToggle: React.FC = () => {
   }, [darkMode]);
 
   useEffect(() => {
-    // 페이지 로드 시 저장된 상태 불러오기
     const savedDarkMode = localStorage.getItem('darkMode');
     if (savedDarkMode !== null) {
-      dispatch(toggleDarkMode()); // 저장된 상태가 있다면 다크 모드로 설정
+      dispatch(toggleDarkMode());
     }
-  }, []); // 빈 배열을 전달하여 이펙트가 한 번만 실행되도록 설정
+  }, []);
 
   const handleToggle = () => {
     dispatch(toggleDarkMode());
-    // 설정 변경 시 로컬 스토리지에 저장
     localStorage.setItem('darkMode', !darkMode ? 'true' : 'false');
   };
 
