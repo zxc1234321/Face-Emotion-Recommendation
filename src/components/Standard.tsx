@@ -8,9 +8,10 @@ const Wrapper = styled.div<{ isDarkMode: boolean }>`
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid ${(props) => (props.isDarkMode ? '#fff' : '#000')};
+    border: 2px solid ${(props) => (props.isDarkMode ? '#fff' : '#000')};
     width: auto;
     height: 1500px;
+    border-radius: 15px;
 `;
 
 const APIRow = styled.div`
@@ -43,14 +44,14 @@ const Standard: React.FC = () => {
         <Wrapper isDarkMode={isDarkMode}>
             <APIRow>
                 <APIWrapper isDarkMode={isDarkMode}>
-                    <p>API no.1</p>
+                    <p>API 1</p>
                 </APIWrapper>
                 <APIWrapper isDarkMode={isDarkMode}>
-                    <p>API no.2</p>
+                    <p>API 2</p>
                 </APIWrapper>
             </APIRow>
             <APIWrapper2 isDarkMode={isDarkMode}>
-                <p>API no.3</p>
+                <p>API 3</p>
             </APIWrapper2>
         </Wrapper>
     );
