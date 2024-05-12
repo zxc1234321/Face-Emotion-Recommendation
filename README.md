@@ -5,7 +5,7 @@ Dataset: https://huggingface.co/datasets/TrainingDataPro/facial-emotion-recognit
 ```
 Framework
 AI - 미정
-Backend - Spring Boot
+Backend - Nest.js
 Frontend - React
 DB - MariaDB
 ```
