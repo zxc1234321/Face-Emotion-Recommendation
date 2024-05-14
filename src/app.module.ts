@@ -4,11 +4,10 @@ import { AppService } from './app.service';
 import { WebcamController } from './webcam/webcam.controller';
 import { WebcamService } from './webcam/webcam.service';
 import { WebcamModule } from './webcam/webcam.module';
-import { BoardsModule } from './boards/boards.module';
-import { WebcamModule } from './webcam/webcam.module';
+
 
 @Module({
-  imports: [WebcamModule, BoardsModule],
+  imports: [WebcamModule],
   controllers: [AppController, WebcamController],
   providers: [AppService, WebcamService],
 })
