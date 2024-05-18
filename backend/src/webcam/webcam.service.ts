@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Injectable } from '@nestjs/common';
+import * as FormData from 'form-data';
 
 @Injectable()
 export class WebcamService {
@@ -8,15 +9,21 @@ export class WebcamService {
   // 이미지를 FastAPI로 보냄
   async analyzeImage(image: Buffer): Promise<any> {
     try {
-      // Buffer를 Blob으로 변환
-      const blob = new Blob([image], { type: 'image/jpeg' });
-
       const formData = new FormData();
-      formData.append('image', blob, 'image.jpg');
+      formData.append('image', image, {
+        filename: 'image.jpg',
+        contentType: 'image/jpeg',
+      });
 
-      const response = await axios.post('http://localhost:3000/result', formData);
+      const response = await axios.post(
+        'http://localhost:8000/analyze',
+        formData,
+        {
+          headers: formData.getHeaders(),
+        },
+      );
 
-      return response.data.emotion;
+      return response.data;
     } catch (error) {
       throw error;
     }
