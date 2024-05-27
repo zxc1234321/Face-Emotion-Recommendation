@@ -7,3 +7,4 @@ import { WebcamService } from './webcam.service';
   providers: [WebcamService],
 })
 export class WebcamModule {}
+

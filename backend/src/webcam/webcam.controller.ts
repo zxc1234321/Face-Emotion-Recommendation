@@ -1,21 +1,14 @@
-import { Controller, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Controller, Post, UploadedFile, UseInterceptors, Query } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { WebcamService } from './webcam.service';
-import { FileInterceptor } from "@nestjs/platform-express";
-import * as fs from "node:fs";
 
 @Controller('webcam')
 export class WebcamController {
-  webcamService: WebcamService;
+  constructor(private readonly webcamService: WebcamService) {}
 
-  constructor(webcamService: WebcamService) {
-    this.webcamService = webcamService;
-  }
-  @Post('/result')
+  @Post('analyze')
   @UseInterceptors(FileInterceptor('image'))
-  async analyzeImage(@UploadedFile() image: Express.Multer.File): Promise<any> {
-    const result = await this.webcamService.analyzeImage(image.buffer);
-
-    const emotionResult = result['emotion'];
-    return emotionResult;
+  async analyzeImage(@UploadedFile() image: Express.Multer.File, @Query('accessToken') accessToken: string): Promise<any> {
+    return this.webcamService.analyzeImage(image, accessToken);
   }
 }
