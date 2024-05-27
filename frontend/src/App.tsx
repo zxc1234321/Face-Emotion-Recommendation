@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './modules/Store';
 import './assets/styles/Darkmode.css';
@@ -9,10 +9,11 @@ import Books from './routes/Books';
 import Drama from './routes/Drama';
 import Movie from './routes/Movie';
 import Music from './routes/Music';
+import Webcam from './components/Webcam'; // Webcam 컴포넌트 임포트
 import Loading from './components/Loading'; // 로딩 컴포넌트 임포트
 import { toggleDarkMode } from './modules/Actions';
 
-const App: React.FC = () => {
+const App = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -47,6 +48,7 @@ const App: React.FC = () => {
             <Route path="/drama" element={<Drama />} />
             <Route path="/movie" element={<Movie />} />
             <Route path="/music" element={<Music />} />
+            <Route path="/webcam" element={<Webcam />} /> {/* 새로운 라우트 추가 */}
             <Route path="/" element={<Mainpage />} />
           </Routes>
         </div>
