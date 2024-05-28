@@ -168,5 +168,48 @@ const Webcam = () => {
     </div>
   );
 };
+const VideoContainer = styled.div`
+  position: relative;
+  width: 750px; /* 원하는 너비로 설정 */
+  height: 500px; /* 원하는 높이로 설정 */
+  margin: 0 auto;
+  border: 2px solid ${(props) => (props.isDarkMode ? '#fff' : '#000')}; /* Dark Mode일 때 border 색 변경 */
+  overflow: hidden; /* 비디오가 VideoContainer를 벗어나지 않도록 설정 */
+`;
+
+const Video = styled.video`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const Canvas = styled.canvas`
+  display: none;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+const Button = styled.button`
+  margin: 0 10px;
+  padding: 12px 22px;
+  background-color: ${(props) => (props.disabled ? '#ccc' : '#FF6347')};
+  color: white;
+  font-size: 16px;
+  font-family: 'LINESeedKR-Bd', sans-serif;
+  border: none;
+  border-radius: 12px;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: ${(props) => (props.disabled ? '#ccc' : '#FF4500')};
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+`;
 
 export default Webcam;
