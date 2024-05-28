@@ -1,4 +1,3 @@
-// spotify.controller.ts
 import { Controller, Get, Query } from '@nestjs/common';
 import { SpotifyService } from './spotify.service';
 
@@ -16,5 +15,14 @@ export class SpotifyController {
   async profile(@Query('accessToken') accessToken: string) {
     const userProfile = await this.spotifyService.getUserProfile(accessToken);
     return userProfile;
+  }
+
+  @Get('search-by-emotion')
+  async searchByEmotion(
+    @Query('emotion') emotion: string,
+    @Query('accessToken') accessToken: string,
+  ) {
+    const tracks = await this.spotifyService.searchTracksByEmotion(emotion, accessToken);
+    return tracks;
   }
 }

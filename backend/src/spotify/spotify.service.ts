@@ -1,8 +1,8 @@
-// spotify.service.ts
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { firstValueFrom } from 'rxjs';
 import { ConfigService } from '@nestjs/config';
+import axios from 'axios';
 
 @Injectable()
 export class SpotifyService {
@@ -52,6 +52,11 @@ export class SpotifyService {
     };
 
     const response = await firstValueFrom(this.httpService.get(url, { headers }));
-    return response.data;
+    const data = response.data;
+
+    // 5173 포트로 검색 결과 전송
+    await axios.post('http://localhost:5173/spotify-results', data);
+
+    return data;
   }
 }
