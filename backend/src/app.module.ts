@@ -6,13 +6,10 @@ import { WebcamService } from './webcam/webcam.service';
 import { WebcamModule } from './webcam/webcam.module';
 import { HttpModule } from '@nestjs/axios';
 import { ConfigModule } from '@nestjs/config';
-import { SpotifyModule } from './spotify/spotify.module';
-import { MovieModule } from './movie/movie.module';
-import { DramaModule } from './drama/drama.module';
-import { WebtoonModule } from './webtoon/webtoon.module';
+
 
 @Module({
-  imports: [WebcamModule, HttpModule, ConfigModule.forRoot(), SpotifyModule, MovieModule, DramaModule, WebtoonModule],
+  imports: [WebcamModule, HttpModule, ConfigModule.forRoot({isGlobal: true,})],
   controllers: [AppController, WebcamController],
   providers: [AppService, WebcamService],
 })
