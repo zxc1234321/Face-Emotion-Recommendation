@@ -21,8 +21,9 @@ export class SpotifyController {
   async searchByEmotion(
     @Query('emotion') emotion: string,
     @Query('accessToken') accessToken: string,
+    @Query('refreshToken') refreshToken: string,
   ) {
-    const tracks = await this.spotifyService.searchTracksByEmotion(emotion, accessToken);
+    const tracks = await this.spotifyService.searchTracksByEmotion(emotion, accessToken, refreshToken);
     return tracks;
   }
 }

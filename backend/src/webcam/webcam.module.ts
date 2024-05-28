@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { WebcamController } from './webcam.controller';
 import { WebcamService } from './webcam.service';
-// provider
+import { SpotifyModule } from '../spotify/spotify.module';
+
 @Module({
-  controllers: [WebcamController],
+  imports: [SpotifyModule],
   providers: [WebcamService],
+  exports: [WebcamService],
 })
 export class WebcamModule {}
-
