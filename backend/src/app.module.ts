@@ -1,16 +1,26 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { WebcamController } from './webcam/webcam.controller';
-import { WebcamService } from './webcam/webcam.service';
+import { ConfigModule } from '@nestjs/config';
+import { EmotionModule } from './emotion/emotion.module';
+import { SpotifyModule } from './spotify/spotify.module';
+import { TmdbModule } from './tmdb/tmdb.module';
+import { BooksModule } from './books/books.module';
 import { WebcamModule } from './webcam/webcam.module';
 import { HttpModule } from '@nestjs/axios';
-import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
-  imports: [WebcamModule, HttpModule, ConfigModule.forRoot({isGlobal: true,})],
-  controllers: [AppController, WebcamController],
-  providers: [AppService, WebcamService],
+  imports: [
+    WebcamModule,
+    HttpModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    EmotionModule,
+    SpotifyModule,
+    TmdbModule,
+    BooksModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
