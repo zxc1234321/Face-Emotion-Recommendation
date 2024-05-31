@@ -1,60 +1,77 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import RootState from '../modules/RootState'; // RootState 임포트 추가
+import axios from 'axios';
 
 const Wrapper = styled.div<{ isDarkMode: boolean }>`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border: 2px solid ${(props) => (props.isDarkMode ? '#fff' : '#000')};
-    width: auto;
-    height: 1500px;
-    border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  border: 2px solid ${(props) => (props.isDarkMode ? '#fff' : '#000')};
+  width: auto;
+  height: 1500px;
+  border-radius: 15px;
 `;
 
-const APIRow = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 1400px;
-    margin-bottom: 20px;
+const APIContainer = styled.div<{ isDarkMode: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  border: 2px solid ${(props) => (props.isDarkMode ? '#fff' : '#000')};
+  width: 650px;
+  height: 650px;
+  border-radius: 15px;
+  text-align: center;
 `;
 
-const APIWrapper = styled.div<{ isDarkMode: boolean }>`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 15px;
-    border: 1px solid ${(props) => (props.isDarkMode ? '#fff' : '#000')};
-    width: 630px;
-    height: 600px;
-    text-align: center;
-    border-radius: 5px;
-`;
-
-const APIWrapper2 = styled(APIWrapper) <{ isDarkMode: boolean }>`
-    margin-right: 740px;
-`;
-
-const Standard: React.FC = () => {
-    const isDarkMode = useSelector((state: RootState) => state.darkMode);
-    return (
-        <Wrapper isDarkMode={isDarkMode}>
-            <APIRow>
-                <APIWrapper isDarkMode={isDarkMode}>
-                    <p>API 1</p>
-                </APIWrapper>
-                <APIWrapper isDarkMode={isDarkMode}>
-                    <p>API 2</p>
-                </APIWrapper>
-            </APIRow>
-            <APIWrapper2 isDarkMode={isDarkMode}>
-                <p>API 3</p>
-            </APIWrapper2>
-        </Wrapper>
-    );
+interface StandardProps {
+  endpoint: string;
+  emotion: string;
 }
+
+const Standard: React.FC<StandardProps> = ({ endpoint, emotion }) => {
+  const [apiResult, setApiResult] = useState<any>(null);
+  const isDarkMode = false; // 이 부분은 실제 다크 모드 상태로 변경해야 합니다.
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/emotion/${endpoint}?emotion=${emotion}`
+        );
+        setApiResult(response.data);
+      } catch (error) {
+        console.error('Error fetching API data:', error);
+        setApiResult({ error: 'Failed to fetch API data' });
+      }
+    };
+
+    fetchData();
+  }, [endpoint, emotion]);
+
+  if (!apiResult) {
+    return (
+      <Wrapper isDarkMode={isDarkMode}>
+        <APIContainer isDarkMode={isDarkMode}>
+          <p>Loading...</p>
+        </APIContainer>
+      </Wrapper>
+    );
+  }
+
+  return (
+    <Wrapper isDarkMode={isDarkMode}>
+      <APIContainer isDarkMode={isDarkMode}>
+        {apiResult.error ? (
+          <pre>{JSON.stringify(apiResult.error, null, 2)}</pre>
+        ) : (
+          <pre>{JSON.stringify(apiResult, null, 2)}</pre>
+        )}
+      </APIContainer>
+    </Wrapper>
+  );
+};
 
 export default Standard;

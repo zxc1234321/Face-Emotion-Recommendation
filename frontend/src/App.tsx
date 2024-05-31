@@ -26,7 +26,7 @@ const App = () => {
     // 2초 후에 로딩 상태 변경
     setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 500);
   }, []);
 
   // 로딩 중일 때 로딩 컴포넌트를 보여줌
@@ -48,7 +48,8 @@ const App = () => {
             <Route path="/drama" element={<Drama />} />
             <Route path="/movie" element={<Movie />} />
             <Route path="/music" element={<Music />} />
-            <Route path="/webcam" element={<Webcam />} /> {/* 새로운 라우트 추가 */}
+            <Route path="/webcam" element={<Webcam />} />{' '}
+            {/* 새로운 라우트 추가 */}
             <Route path="/" element={<Mainpage />} />
           </Routes>
         </div>

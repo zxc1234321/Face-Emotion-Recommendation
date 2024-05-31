@@ -4,16 +4,16 @@ import Header from '../components/Header';
 import Standard from '../components/Standard';
 
 const Container = styled.div`
-    padding: 20px 150px; /* 좌우 여백 설정 */
+  padding: 20px 150px; /* 좌우 여백 설정 */
 `;
 
-const Books: React.FC = () => {
-    return (
-        <Container>
-            <Header />
-            <Standard />
-        </Container>
-    );
+const Drama: React.FC = () => {
+  return (
+    <Container>
+      <Header />
+      <Standard endpoint="drama" emotion={emotion} />
+    </Container>
+  );
 };
 
-export default Books;
+export default Drama;

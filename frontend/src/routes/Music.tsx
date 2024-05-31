@@ -2,18 +2,22 @@ import React from 'react';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Standard from '../components/Standard';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
-    padding: 20px 150px; /* 좌우 여백 설정 */
+  padding: 20px 150px;
 `;
 
-const Books: React.FC = () => {
-    return (
-        <Container>
-            <Header />
-            <Standard />
-        </Container>
-    );
+const Music: React.FC = () => {
+  const location = useLocation();
+  const emotion = location.state?.emotion || 'neutral'; // 기본값으로 'neutral' 설정
+
+  return (
+    <Container>
+      <Header />
+      <Standard endpoint="music" emotion={emotion} />
+    </Container>
+  );
 };
 
-export default Books;
+export default Music;
