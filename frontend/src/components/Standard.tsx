@@ -28,18 +28,21 @@ const APIContainer = styled.div<{ isDarkMode: boolean }>`
 
 interface StandardProps {
   endpoint: string;
-  emotion: string;
+  emotionResult: string;
 }
 
-const Standard: React.FC<StandardProps> = ({ endpoint, emotion }) => {
+const Standard: React.FC<StandardProps> = ({ endpoint, emotionResult }) => {
   const [apiResult, setApiResult] = useState<any>(null);
   const isDarkMode = false; // 이 부분은 실제 다크 모드 상태로 변경해야 합니다.
 
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log(
+          `Fetching data from endpoint: ${endpoint} with emotion: ${emotionResult}`
+        );
         const response = await axios.get(
-          `http://localhost:3000/emotion/${endpoint}?emotion=${emotion}`
+          `http://localhost:3000/emotion/${endpoint}?emotion=${emotionResult}`
         );
         setApiResult(response.data);
       } catch (error) {
@@ -49,7 +52,7 @@ const Standard: React.FC<StandardProps> = ({ endpoint, emotion }) => {
     };
 
     fetchData();
-  }, [endpoint, emotion]);
+  }, [endpoint, emotionResult]);
 
   if (!apiResult) {
     return (

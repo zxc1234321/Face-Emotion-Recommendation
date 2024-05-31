@@ -1,21 +1,36 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Header from '../components/Header';
 import Standard from '../components/Standard';
-import { useLocation } from 'react-router-dom';
+import { RootState } from '../modules/Types';
 
 const Container = styled.div`
   padding: 20px 150px;
 `;
 
 const Music: React.FC = () => {
-  const location = useLocation();
-  const emotion = location.state?.emotion || 'neutral'; // 기본값으로 'neutral' 설정
+  const navigate = useNavigate();
+  const emotionResult = useSelector((state: RootState) => state.emotionResult);
+
+  useEffect(() => {
+    if (!emotionResult) {
+      console.error('No emotion result provided!');
+      navigate('/'); // 기본 페이지로 리디렉션하거나 오류 페이지로 리디렉션
+    } else {
+      console.log('Emotion Result:', emotionResult); // 디버깅을 위한 로그
+    }
+  }, [emotionResult, navigate]);
+
+  if (!emotionResult) {
+    return <p>Loading...</p>; // 감정 결과가 없으면 로딩 메시지 표시
+  }
 
   return (
     <Container>
       <Header />
-      <Standard endpoint="music" emotion={emotion} />
+      <Standard endpoint="music" emotionResult={emotionResult} />
     </Container>
   );
 };

@@ -2,12 +2,10 @@ import React, { useState, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { RootState } from '../modules/Types';
+import { setEmotionResult } from '../modules/Actions';
 
-interface RootState {
-  darkMode: boolean;
-}
-
-const Webcam = () => {
+const Webcam: React.FC = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -94,10 +92,10 @@ const Webcam = () => {
         console.log('Image uploaded successfully', result);
 
         // 분석 결과를 Redux 스토어에 저장
-        dispatch({ type: 'SET_ANALYSIS_RESULT', payload: result });
+        dispatch(setEmotionResult(result.emotion));
 
         // 분석 결과 페이지로 이동
-        navigate('/books', { state: { emotion: result.emotion } }); // 예시로 music 페이지로 이동하도록 함
+        navigate('/books'); // 예시로 books 페이지로 이동하도록 함
       }, 'image/jpeg');
     } catch (error) {
       console.error('Error uploading image:', error);

@@ -13,7 +13,7 @@ import Webcam from './components/Webcam'; // Webcam 컴포넌트 임포트
 import Loading from './components/Loading'; // 로딩 컴포넌트 임포트
 import { toggleDarkMode } from './modules/Actions';
 
-const App = () => {
+const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
