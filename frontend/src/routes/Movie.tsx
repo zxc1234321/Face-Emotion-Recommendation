@@ -7,7 +7,7 @@ import Standard from '../components/Standard';
 import { RootState } from '../modules/Types';
 
 const Container = styled.div`
-  padding: 20px 150px;
+  padding: 0%;
 `;
 
 const Movie: React.FC = () => {

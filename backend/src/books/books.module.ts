@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import { HttpModule } from '@nestjs/axios'; // HttpModule을 임포트
+import { HttpModule } from '@nestjs/axios';
 import { BooksService } from './books.service';
 
 @Module({
-  imports: [ConfigModule, HttpModule], // ConfigModule과 HttpModule을 임포트
+  imports: [ConfigModule.forRoot(), HttpModule],
   providers: [BooksService],
   exports: [BooksService],
 })
