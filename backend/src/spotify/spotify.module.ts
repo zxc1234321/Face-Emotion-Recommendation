@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { SpotifyController } from './spotify.controller';
+import { HttpModule } from '@nestjs/axios';
+import { ConfigModule } from '@nestjs/config';
 import { SpotifyService } from './spotify.service';
 
 @Module({
-  imports: [SpotifyModule],
-  controllers: [SpotifyController],
+  imports: [HttpModule, ConfigModule],
   providers: [SpotifyService],
+  exports: [SpotifyService],
 })
 export class SpotifyModule {}

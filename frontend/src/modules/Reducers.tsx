@@ -1,23 +1,33 @@
-import { TOGGLE_DARK_MODE } from './Actions';
+import { TOGGLE_DARK_MODE, SET_EMOTION_RESULT, AppActions } from './Actions';
 
 interface AppState {
-    darkMode: boolean;
+  darkMode: boolean;
+  emotionResult: string | null;
 }
 
 const initialState: AppState = {
-    darkMode: false
+  darkMode: false,
+  emotionResult: null,
 };
 
-const rootReducer = (state: AppState = initialState, action: any): AppState => {
-    switch (action.type) {
-        case TOGGLE_DARK_MODE:
-            return {
-                ...state,
-                darkMode: !state.darkMode
-            };
-        default:
-            return state;
-    }
+const rootReducer = (
+  state: AppState = initialState,
+  action: AppActions
+): AppState => {
+  switch (action.type) {
+    case TOGGLE_DARK_MODE:
+      return {
+        ...state,
+        darkMode: !state.darkMode,
+      };
+    case SET_EMOTION_RESULT:
+      return {
+        ...state,
+        emotionResult: action.payload,
+      };
+    default:
+      return state;
+  }
 };
 
 export default rootReducer;
