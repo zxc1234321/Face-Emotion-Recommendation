@@ -6,7 +6,8 @@ import { toggleDarkMode } from '../modules/Actions';
 import RootState from '../modules/RootState'; // 수정된 부분
 
 const ToggleSwitchWrapper = styled.label`
-  display: inline-block;
+  display: flex; /* Button과 토글을 나란히 배치 */
+  align-items: center; /* 수직 중앙 정렬 */
   position: relative;
   width: 4.2em;
   height: 2em;
