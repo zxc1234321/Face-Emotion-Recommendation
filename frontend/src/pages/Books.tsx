@@ -10,14 +10,14 @@ const Container = styled.div`
   padding: 0%;
 `;
 
-const Movie: React.FC = () => {
+const Books: React.FC = () => {
   const navigate = useNavigate();
   const emotionResult = useSelector((state: RootState) => state.emotionResult);
 
   useEffect(() => {
     if (!emotionResult) {
       console.error('No emotion result provided!');
-      navigate('/'); // 기본 페이지로 리디렉션하거나 오류 페이지로 리디렉션
+      navigate('/main');  // 기본 페이지로 리디렉션하거나 오류 페이지로 리디렉션
     } else {
       console.log('Emotion Result:', emotionResult); // 디버깅을 위한 로그
     }
@@ -30,9 +30,9 @@ const Movie: React.FC = () => {
   return (
     <Container>
       <Header />
-      <Standard endpoint="movie" emotionResult={emotionResult} />
+      <Standard endpoint="books" emotionResult={emotionResult} />
     </Container>
   );
 };
 
-export default Movie;
+export default Books;
