@@ -1,26 +1,49 @@
 import { Injectable } from '@nestjs/common';
-import { exec } from 'child_process';
-import { promisify } from 'util';
+import { spawn } from 'child_process';
 import * as path from 'path';
-
-const execPromise = promisify(exec);
 
 @Injectable()
 export class EmotionService {
-  async analyzeEmotion(imagePath: string): Promise<any> {
-    try {
-      const scriptPath = path.join(__dirname, '..', '..', 'analyze.py');
-      const { stdout, stderr } = await execPromise(
-        `python ${scriptPath} ${imagePath}`,
-      );
-      if (stderr) {
-        console.error('Python script stderr:', stderr);
-        throw new Error(stderr);
-      }
-      return JSON.parse(stdout);
-    } catch (error) {
-      console.error('Error executing Python script:', error);
-      throw new Error('Failed to analyze emotion');
-    }
+  async analyzeEmotion(image: any): Promise<any> {
+    const scriptPath = path.resolve(__dirname, '../../analyze.py');
+    console.log('Script Path:', scriptPath); // 경로 출력
+
+    return new Promise((resolve, reject) => {
+      const process = spawn('python3', [scriptPath, image]);
+
+      let stdoutData = '';
+      let stderrData = '';
+
+      process.stdout.on('data', (data) => {
+        stdoutData += data.toString();
+      });
+
+      process.stderr.on('data', (data) => {
+        stderrData += data.toString();
+      });
+
+      process.on('error', (error) => {
+        reject(`error: ${error.message}`);
+      });
+
+      process.on('close', (code) => {
+        if (code !== 0) {
+          reject(new Error(`Command failed with exit code ${code}\n${stderrData}`));
+          return;
+        }
+
+        try {
+          const result = JSON.parse(stdoutData);
+          console.log('Analysis Result:', result); // 결과 로그 출력
+          if (result.error) {
+            reject(result.error);
+          } else {
+            resolve(result);
+          }
+        } catch (e) {
+          reject(`Failed to parse JSON: ${stdoutData}`);
+        }
+      });
+    });
   }
 }

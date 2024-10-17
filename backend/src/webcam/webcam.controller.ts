@@ -1,18 +1,8 @@
-import {
-  Controller,
-  Post,
-  UploadedFile,
-  UseInterceptors,
-  Res,
-} from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { Controller, Post, Body, InternalServerErrorException } from '@nestjs/common';
 import { EmotionService } from '../emotion/emotion.service';
 import { SpotifyService } from '../spotify/spotify.service';
 import { TmdbService } from '../tmdb/tmdb.service';
 import { BooksService } from '../books/books.service';
-import { Response } from 'express';
-import * as path from 'path';
-import * as fs from 'fs';
 
 @Controller('webcam')
 export class WebcamController {
@@ -24,55 +14,32 @@ export class WebcamController {
   ) {}
 
   @Post('analyze')
-  @UseInterceptors(FileInterceptor('image', { dest: './uploads' }))
-  async analyze(
-    @UploadedFile() file: Express.Multer.File,
-    @Res() res: Response,
-  ) {
+  async analyze(@Body() image: any) {
     try {
-      const imagePath = path.join(
-        __dirname,
-        '..',
-        '..',
-        'uploads',
-        file.filename,
-      );
-      console.log('Uploaded file path:', imagePath);
+      const emotionResult = await this.emotionService.analyzeEmotion(image);
+      console.log('Emotion Result:', emotionResult);
 
-      const result = await this.emotionService.analyzeEmotion(imagePath);
-      console.log('Emotion analysis result:', result);
-
-      if (!result || !result[0] || !result[0].dominant_emotion) {
-        throw new Error('Failed to detect dominant emotion');
+      if (!emotionResult || !emotionResult[0] || !emotionResult[0].emotion) {
+        throw new Error('Emotion result does not contain emotion');
       }
 
-      const emotion = result[0].dominant_emotion;
-      const musicRecommendations = await this.spotifyService.getRecommendations(
-        emotion,
-      );
-      const bookRecommendations = await this.booksService.getRecommendations(
-        emotion,
-      );
+      const dominantEmotion = emotionResult[0].emotion.dominant_emotion;
 
-      res.json({
-        emotion,
-        music: musicRecommendations,
-        books: bookRecommendations,
-      });
+      const spotifyRecommendations = await this.spotifyService.getRecommendations(dominantEmotion);
+      const tvRecommendations = await this.tmdbService.getTvRecommendations(dominantEmotion);
+      const movieRecommendations = await this.tmdbService.getMovieRecommendations(dominantEmotion);
+      const booksRecommendations = await this.booksService.getRecommendations(dominantEmotion);
 
-      // 이미지 파일 삭제
-      fs.unlinkSync(imagePath);
+      return {
+        emotion: emotionResult,
+        spotify: spotifyRecommendations,
+        tv: tvRecommendations,
+        movies: movieRecommendations,
+        books: booksRecommendations,
+      };
     } catch (error) {
-      console.error(
-        'Error analyzing emotion and fetching recommendations:',
-        error,
-      );
-      res
-        .status(500)
-        .json({
-          error: 'Failed to analyze emotion and fetch recommendations',
-          details: error.message,
-        });
+      console.error('Error analyzing emotion and fetching recommendations', error);
+      throw new InternalServerErrorException('Failed to analyze emotion and fetch recommendations');
     }
   }
 }
