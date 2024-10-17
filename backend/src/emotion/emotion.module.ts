@@ -9,5 +9,6 @@ import { BooksModule } from '../books/books.module';
   imports: [SpotifyModule, TmdbModule, BooksModule],
   providers: [EmotionService],
   controllers: [EmotionController],
+  exports: [EmotionService],
 })
 export class EmotionModule {}

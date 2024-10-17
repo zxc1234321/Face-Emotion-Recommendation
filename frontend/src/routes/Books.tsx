@@ -8,12 +8,12 @@ const Container = styled.div`
 `;
 
 const Books: React.FC = () => {
-    return (
-        <Container>
-            <Header />
-            <Standard />
-        </Container>
-    );
+  return (
+    <Container>
+      <Header />
+      <Standard endpoint="books" />
+    </Container>
+  );
 };
 
 export default Books;

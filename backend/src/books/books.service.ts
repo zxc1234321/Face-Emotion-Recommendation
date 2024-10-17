@@ -1,24 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import axios from 'axios';
+import { Injectable, Logger, InternalServerErrorException } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable()
 export class BooksService {
-  constructor(private configService: ConfigService) {}
+  private readonly logger = new Logger(BooksService.name);
+
+  constructor(private readonly httpService: HttpService) {}
 
   async getRecommendations(emotion: string): Promise<any> {
+    const url = 'https://api.example.com/books/recommendations';
     try {
-      const response = await axios.get('https://www.googleapis.com/books/v1/volumes', {
-        params: {
-          q: emotion,
-          key: this.configService.get('GOOGLE_BOOKS_API_KEY'),
-        },
-      });
-      console.log('Google Books API Response:', response.data);
-      return response.data.items;
+      const response = await firstValueFrom(
+        this.httpService.get(url, {
+          params: { emotion },
+        }),
+      );
+      return response.data;
     } catch (error) {
-      console.error('Error fetching Google Books recommendations:', error.response ? error.response.data : error.message);
-      throw error;
+      this.logger.error('Error fetching book recommendations', error.message);
+      throw new InternalServerErrorException('Failed to fetch book recommendations');
     }
   }
 }

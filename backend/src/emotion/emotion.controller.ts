@@ -15,7 +15,6 @@ export class EmotionController {
   @Get('music')
   async getMusicRecommendations(@Query('emotion') emotion: string, @Res() res: Response) {
     try {
-      console.log(`Fetching music recommendations for emotion: ${emotion}`);
       const recommendations = await this.spotifyService.getRecommendations(emotion);
       res.json(recommendations);
     } catch (error) {
@@ -27,7 +26,6 @@ export class EmotionController {
   @Get('movie')
   async getMovieRecommendations(@Query('emotion') emotion: string, @Res() res: Response) {
     try {
-      console.log(`Fetching movie recommendations for emotion: ${emotion}`);
       const recommendations = await this.tmdbService.getMovieRecommendations(emotion);
       res.json(recommendations);
     } catch (error) {
@@ -39,7 +37,6 @@ export class EmotionController {
   @Get('drama')
   async getTvRecommendations(@Query('emotion') emotion: string, @Res() res: Response) {
     try {
-      console.log(`Fetching TV recommendations for emotion: ${emotion}`);
       const recommendations = await this.tmdbService.getTvRecommendations(emotion);
       res.json(recommendations);
     } catch (error) {
@@ -51,7 +48,6 @@ export class EmotionController {
   @Get('books')
   async getBookRecommendations(@Query('emotion') emotion: string, @Res() res: Response) {
     try {
-      console.log(`Fetching book recommendations for emotion: ${emotion}`);
       const recommendations = await this.booksService.getRecommendations(emotion);
       res.json(recommendations);
     } catch (error) {
